@@ -41,3 +41,20 @@ class Solution:
             if value == maxi:               # if value = maximum, append this key to list
                 lst.append(key)
         return lst
+
+        # Solution 2
+    def helper(self, root, cache):
+        if root == None:
+            return
+        cache[root.val] += 1
+        self.helper(root.left, cache)
+        self.helper(root.right, cache)
+        return
+    def findMode(self, root: Optional[TreeNode]) -> List[int]:
+        if root == None:
+            return []
+        cache = defaultdict(int)
+        self.helper(root, cache)
+        max_freq = max(cache.values())
+        result = [k for k,v in cache.items() if v == max_freq]
+        return result
